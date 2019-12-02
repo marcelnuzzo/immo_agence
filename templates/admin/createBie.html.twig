@@ -1,0 +1,39 @@
+{% extends 'base_admin.html.twig' %}
+
+{% form_theme formBien 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    {% if editMode %}
+        <div class="jumbotron" style="background-color:orange">
+            <h1 style ="text-align:center">Modification d'un bien</h1>
+        </div>                
+    {% else %}
+        <div class="jumbotron" style="background-color:cyan">
+            <h1 style ="text-align:center">Création d'un bien</h1>
+        </div>
+    {% endif %}
+
+    {{ form_start(formBien) }}
+    
+    {{ form_row(formBien.description, {'attr': {'placeholder': "Description"}}) }}
+    {{ form_row(formBien.surface, {'attr': {'placeholder': "Surface"}}) }}
+    {{ form_row(formBien.etage, {'attr': {'placeholder': "Etage"}}) }}
+    {{ form_row(formBien.chambre, {'attr': {'placeholder': "Nombre de chambres"}}) }}
+    {{ form_row(formBien.image, {'attr': {'placeholder': "URL de l'image"}}) }}
+    {{ form_row(formBien.statut, {'attr': {'placeholder': "Statut bien"}}) }}
+    {{ form_row(formBien.createAt, {'attr': {'placeholder': "Date"}}) }}
+    {{ form_row(formBien.tipe) }}
+    {{ form_row(formBien.categorie) }}
+
+    <button type="submit" class="btn btn-success">
+    {% if editMode %}
+        Modifier
+    {% else %}
+        Ajouter le bien
+    {% endif %}
+    </button>
+    
+    {{ form_end(formBien) }}
+    
+   
+{% endblock %}

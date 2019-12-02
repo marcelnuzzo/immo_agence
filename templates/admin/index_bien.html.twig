@@ -1,0 +1,47 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Liste des biens!{% endblock %}
+
+{% block body %}
+
+<div class = "jumbotron">
+    <h1 style="text-align:center"><mark>Biens</mark></h1>
+    <a href="{{ path('home') }}" class="btn btn-info">Retour au menu principale</a> 
+</div>
+<a class="btn btn-warning" style="color:white" href="{{ path('admin_createBie') }}" role="button" >Créer</a>
+<hr>
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Description</th>
+        <th>Surface</th>
+        <th>Etage</th>
+        <th>Chambre</th>
+        <th>Image</th>
+        <th>Statut</th>
+        <th>Date</th>
+        <th>Titre type</th>
+        <th>Id type</th>
+        <th>Titre catégorie</th>
+        <th>Id catégorie</th>
+    </tr>
+    {%for bien in biens %}
+        <tr>
+            <td>{{ bien.id }}</td>
+            <td>{{ bien.description }}</td>
+            <td>{{ bien.surface }}</td>
+            <td>{{ bien.etage }}</td>
+            <td>{{ bien.chambre }}</td>
+            <td>{{ bien.image }}</td>
+            <td>{{ bien.statut }}</td>
+            <td>{{ bien.createdAt | date('d/m/Y H:i') }}</td>
+            <td>{{ bien.tipe.libelle }}</td>
+            <td>{{ bien.tipe.id }}</td>
+            <td>{{ bien.categorie.libelle }}</td>
+            <td>{{ bien.categorie.id }}</td>
+            <td><a class="btn btn-info" style="color:white" href="{{ path('admin_editBie', {'id':bien.id}) }}" role="button" >Modifier</a></td>
+            <td><a class="btn btn-danger" style="color:white" href="{{ path('admin_deleteBie', {'id':bien.id}) }} " role="button" >Supprimer</a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

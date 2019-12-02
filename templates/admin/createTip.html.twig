@@ -1,0 +1,32 @@
+{% extends 'base_admin.html.twig' %}
+
+{% form_theme formType 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    
+    {% if editMode %}
+        <div class="jumbotron" style="background-color:orange">
+            <h1 style ="text-align:center">Modification d'un type</h1>
+        </div>                
+    {% else %}
+        <div class="jumbotron" style="background-color:cyan">
+            <h1 style ="text-align:center">Création d'un type</h1>
+        </div>
+    {% endif %}
+
+    {{ form_start(formTipe) }}
+
+    {{ form_row(formTipe.libelle, {'attr': {'placeholder': "Libellé"}}) }}
+    
+    <button type="submit" class="btn btn-success">
+    {% if editMode %}
+        Modifier
+    {% else %}
+        Créer
+    {% endif %}
+    </button>
+    
+    {{ form_end(formTipe) }}
+    
+   
+{% endblock %}

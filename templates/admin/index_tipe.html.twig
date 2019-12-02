@@ -1,0 +1,26 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Liste des types!{% endblock %}
+
+{% block body %}
+
+<div class = "jumbotron">
+    <h1 style="text-align:center"><mark>Types</mark></h1>
+    <a href="{{ path('home') }}" class="btn btn-info">Retour au menu principale</a> 
+</div>
+<a class="btn btn-warning" style="color:white" href="{{ path('admin_createTip') }}" role="button" >Créer</a>
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Libellé</th>
+    </tr>
+    {%for tipe in tipes %}
+        <tr>
+            <td>{{ tipe.id }}</td>
+            <td>{{ tipe.libelle }}</td>
+            <td><a class="btn btn-info" style="color:white" href="{{ path('admin_editTip', {'id':tipe.id}) }}" role="button" >Modifier</a></td>
+            <td><a class="btn btn-danger" style="color:white" href="{{ path('admin_deleteTip', {'id':tipe.id}) }} " role="button" >Supprimer</a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
