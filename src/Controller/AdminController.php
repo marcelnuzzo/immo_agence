@@ -225,7 +225,7 @@ class AdminController extends AbstractController
                      ->add('image')
                      ->add('statut')
                      ->add('type', EntityType::class, [
-                        'class' => Type::class,
+                        'class' => Tipe::class,
                         "choice_label" => 'libelle'
                     ])
                      ->add('categorie', EntityType::class, [
@@ -275,7 +275,7 @@ class AdminController extends AbstractController
                      ->add('image')
                      ->add('statut')
                      ->add('type', EntityType::class, [
-                     'class' => Type::class,
+                     'class' => Tipe::class,
                      "choice_label" => 'libelle'
                      ])
                      ->add('categorie', EntityType::class, [
