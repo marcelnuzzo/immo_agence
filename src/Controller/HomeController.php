@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
-use App\Entity\Category;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Entity\Bien;
+use App\Entity\Categorie;
+//use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
