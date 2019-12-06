@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}/bien{% endblock %}
+
+{% block body %}
+
+<div class="jumbotron">
+    {%for bien in biens | slice(10,length=5) %}
+                        
+        <h3>{{bien.description}}</h3>
+        
+        <img src=" {{ bien.image }} " alt=""  width="220">
+        <p>{{ bien.surface }}</p>
+        
+        <a href="{{ path('blog_show', {'id':bien.id}) }}" class="btn btn-primary"> Lire la suite </a> 
+         <hr>  
+    {% endfor%}
+
+</div>
+
+{% endblock %}

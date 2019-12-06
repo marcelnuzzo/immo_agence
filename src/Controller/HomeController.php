@@ -46,6 +46,21 @@ class HomeController extends AbstractController
     }
 
     /**
+     * @Route("/bien", name="bien")
+     *  
+     */
+    public function bien()
+    {
+        $repo = $this->getDoctrine()->getRepository(Bien::class);
+        $biens = $repo->findAll();
+        
+        return $this->render('home/bien.html.twig', [
+            'controller_name' => 'AdminController',
+            'biens'=> $biens
+        ]);
+    }
+
+    /**
      *  @Route("/admin/admin", name="admin")
     */
     public function admin()

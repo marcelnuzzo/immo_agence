@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bien n° :{{ bien.id }} {% endblock %}
+
+{% block body %}
+
+<div class = "jumbotron">
+     
+          <h1 style="text-align:center;color:blue">Bien n° : {{ bien.id }}
+          <h2>{{bien.description}}</h2>
+          <div class = "metadata"> Ecrit le &nbsp<strong>{{ bien.createdAt | date('d/m/Y)') }}</strong>&nbsp à &nbsp{{ bien.createdAt | date  ('H:i') }}</strong>
+          </div>
+          <div class = "content">
+               <img src=" {{ bien.image }} " alt="">
+               </br>
+          </div>     
+    
+</div>
+       
+  
+{% endblock %}

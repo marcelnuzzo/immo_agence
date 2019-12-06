@@ -5,9 +5,8 @@ namespace App\Controller;
 use App\Entity\Bien;
 use App\Entity\Tipe;
 use App\Entity\Categorie;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,7 +74,7 @@ class AdminController extends AbstractController
     * @Route("/admin/newCat", name="admin_createCat")
     * 
     */
-    public function formulaireCat(Request $request, ObjectManager $manager, Categorie $categorie = null)
+    public function formulaireCat(Request $request, EntityManagerInterface $manager, Categorie $categorie = null)
     {
         if(!$categorie) {
             $categorie = new Categorie();
@@ -109,7 +108,7 @@ class AdminController extends AbstractController
     * 
     * @Route("/admin/editionCat/{id}", name="admin_editCat")
     */
-    public function formulaireCat2(Request $request, ObjectManager $manager, Categorie $categorie = null)
+    public function formulaireCat2(Request $request, EntityManagerInterface $manager, Categorie $categorie = null)
     {
         if(!$categorie) {
             $categorie = new Categorie();
@@ -144,7 +143,7 @@ class AdminController extends AbstractController
     * @Route("/admin/newTip", name="admin_createTip")
     * 
     */
-    public function formulaireTip(Bien $bien = null, Request $request, ObjectManager $manager, Tipe $tipe = null)
+    public function formulaireTip(Bien $bien = null, Request $request, EntityManagerInterface $manager, Tipe $tipe = null)
     {
         if(!$tipe) {
             $tipe = new Tipe();
@@ -179,7 +178,7 @@ class AdminController extends AbstractController
     * 
     * @Route("/admin/editionTip/{id}", name="admin_editTip")
     */
-    public function formulaireTyp1(Bien $bien = null, Request $request, ObjectManager $manager, Tipe $tipe = null)
+    public function formulaireTyp1(Bien $bien = null, Request $request, EntityManagerInterface $manager, Tipe $tipe = null)
     {    
         $form = $this->createFormBuilder($tipe)
                      ->add('libelle')
@@ -210,7 +209,7 @@ class AdminController extends AbstractController
      * @Route("/admin/newBie", name="admin_createBie")
      * 
      */
-    public function formBie(Bien $bien = null, Categorie $categorie = null, Request $request, ObjectManager $manager)
+    public function formBie(Bien $bien = null, Categorie $categorie = null, Request $request, EntityManagerInterface $manager)
     {
         if(!$bien) {
             $bien = new Bien();
@@ -224,7 +223,7 @@ class AdminController extends AbstractController
                      ->add('chambre')
                      ->add('image')
                      ->add('statut')
-                     ->add('type', EntityType::class, [
+                     ->add('tipe', EntityType::class, [
                         'class' => Tipe::class,
                         "choice_label" => 'libelle'
                     ])
@@ -264,7 +263,7 @@ class AdminController extends AbstractController
      * 
      * @Route("/admin/editionBie/{id}", name="admin_editBie")
      */
-    public function formBie1 (Bien $bien = null, Categorie $categorie = null, Request $request, ObjectManager $manager)
+    public function formBie1 (Bien $bien = null, Categorie $categorie = null, Request $request, EntityManagerInterface $manager)
     {
        
         $form = $this->createFormBuilder($bien)
@@ -274,7 +273,7 @@ class AdminController extends AbstractController
                      ->add('chambre')
                      ->add('image')
                      ->add('statut')
-                     ->add('type', EntityType::class, [
+                     ->add('tipe', EntityType::class, [
                      'class' => Tipe::class,
                      "choice_label" => 'libelle'
                      ])
@@ -313,7 +312,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/index_bien/{id}/deleteBie", name="admin_deleteBie")
      */
-    public function deleteBie($id, ObjectManager $Manager, Request $request)
+    public function deleteBie($id, EntityManagerInterface $Manager, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Bien::class);
         $bien = $repo->find($id);
@@ -328,7 +327,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/index_categorie/{id}/deleteCat", name="admin_deleteCat")
      */
-    public function deleteCat($id, ObjectManager $Manager, Request $request)
+    public function deleteCat($id, EntityManagerInterface $Manager, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Categorie::class);
         $categorie = $repo->find($id);
@@ -343,7 +342,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/index_tipe/{id}/deleteTip", name="admin_deleteTip")
      */
-    public function deleteTip($id, ObjectManager $Manager, Request $request)
+    public function deleteTip($id, EntityManagerInterface $Manager, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Tipe::class);
         $tipe = $repo->find($id);
