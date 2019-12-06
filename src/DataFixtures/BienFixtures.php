@@ -5,7 +5,9 @@ namespace App\DataFixtures;
 use App\Entity\Bien;
 use App\Entity\Tipe;
 use App\Entity\Categorie;
+use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+//use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class BienFixtures extends Fixture
@@ -51,8 +53,6 @@ class BienFixtures extends Fixture
                     $categorie->setLibelle($libelle2);
 
                     $manager->persist($categorie);
-                
-            
                     for($k=1; $k <= 10; $k++) {
                         $bien = new Bien();
                         if($j == 2) {
