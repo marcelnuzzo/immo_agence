@@ -59,7 +59,7 @@ class Bien
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="biens")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $categorie;
 

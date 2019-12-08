@@ -22,6 +22,7 @@ class BienFixtures extends Fixture
             '1' => 'Appartement',
             '2' => 'terrain',
             '3' => 'Maison',
+            '4' => 'igloo'
         ];
         foreach ($datas as $data) {
             $item = new Entity\Categorie();
@@ -49,9 +50,17 @@ class BienFixtures extends Fixture
         $tipeRepo = $manager->getRepository('App:Tipe');
 
         //Biens
-            for($k=1; $k <= 10; $k++) {
+            $cat = 0;
+            $tip = 0;
+            for($k=1; $k <= 20; $k++) {
+                
                 $bien = new Entity\Bien();
-                if($datas2 == 2) {
+
+                $statut = ($k > 4 && $k < 6) ? "archivé" : "en cours";
+                $tip = ($tip >= 2) ?  1 : $tip+1;
+                $cat = ($cat >= 4) ?  1 :  $cat+1;
+                
+                if($cat == 2) {
                     $etage = 0;
                     $chambre = 0;
                     $surface = mt_rand(100,1000);
@@ -60,13 +69,7 @@ class BienFixtures extends Fixture
                     $etage=mt_rand(1,10);
                     $chambre=mt_rand(1,10);
                     $surface = mt_rand(10,100);
-                }
-                if($k > 4 && $k < 6) {
-                    $statut = "archivé";
-                }
-                else {
-                    $statut = "en cours";
-                }
+                }    
                 $bien->setDescription($faker->sentence($nbWords = 6, $variableNbWords = true))
                     ->setSurface($surface)
                     ->setEtage($etage)
@@ -74,10 +77,11 @@ class BienFixtures extends Fixture
                     ->setImage($faker->imageUrl($width = 300, $height = 200))
                     ->setStatut($statut)
                     ->setCreatedAt($faker->dateTimeBetween($startDate = '-3days', $endDate = 'now', $timezone = null))
-                    ->setCategorie($categorieRepo->find(mt_rand(1, 2)))
-                    ->setTipe($tipeRepo->find(mt_rand(1, 2)));
+                    ->setCategorie($categorieRepo->find($cat))
+                    ->setTipe($tipeRepo->find($tip));
 
                 $manager->persist($bien);
+                
             }
                 
  
