@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}formUser{% endblock %}
+
+{% form_theme formUser 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    
+        <div class="jumbotron" style="background-color:cyan">
+            <h1 style ="text-align:center">Création d'un utilisateur</h1>
+        </div>
+    
+        {{ form_start(formUser) }}
+
+        {{ form_row(formUser.username, {'attr': {'placeholder': "Nom de l' utilisateur"}}) }}
+        {{ form_row(formUser.email, {'attr': {'placeholder': "Mail de l'utilisateur"}}) }}
+        {{ form_row(formUser.password, {'attr': {'placeholder': "Mot de passe de l'utilisateur"}}) }}
+        {{ form_row(formUser.confirm_password, {'attr': {'placeholder': "Confirmation du mot de passe"}}) }}
+
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+
+        {{ form_end(formUser) }}
+    
+{% endblock %}
