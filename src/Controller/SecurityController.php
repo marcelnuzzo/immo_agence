@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Bien;
 use App\Entity\User;
-use App\Form\FormUserType;
+//use App\Form\FormUserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,9 +66,7 @@ class SecurityController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Bien::class);
         $articles = $repo->findAll();
 
-        return $this->render('security/login.html.twig', [
-            'articles' => $articles
-        ]);
+        return $this->render('security/login.html.twig');
     }
 
     /**

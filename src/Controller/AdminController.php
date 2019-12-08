@@ -168,7 +168,7 @@ class AdminController extends AbstractController
                 }
 
                 return $this->render('admin/createTip.html.twig', [
-                     'formTip' => $form->createView(),
+                     'formTipe' => $form->createView(),
                      'editMode' => $tipe->getId() !== null
                      ]);
     
