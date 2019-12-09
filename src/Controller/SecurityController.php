@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Bien;
 use App\Entity\User;
 //use App\Form\FormUserType;
+use App\Entity\Contact;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,4 +74,36 @@ class SecurityController extends AbstractController
      * @Route("/deconnexion", name="security_logout")
      */
     public function logout() {}
+
+    /**
+    * @Route("security/formUser", name="security_formUser")
+    * 
+    */
+    public function formContact(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    {
+        $contact = new Contact();
+        
+        $form = $this->createFormBuilder($contact)
+                     ->add('firstname')
+                     ->add('lastname')
+                     ->add('email')
+                     ->add('phone')
+                     ->add('message')
+                     ->getForm();
+                     
+           
+                $form->handleRequest($request);
+               
+                if($form->isSubmitted() && $form->isValid()) {                    
+                    $manager->persist($contact);
+                    $manager->flush();
+                    //$this->addFlash('success', 'Votre compte à bien été enregistré.');
+                        return $this->redirectToRoute('security');
+                }
+
+        return $this->render('security/formUser.html.twig', [
+            'controller_name' => 'SecurityController',
+            'formUser' => $form->createView()
+        ]);
+    }
 }
