@@ -84,7 +84,7 @@ class SecurityController extends AbstractController
        
         $form = $this->createFormBuilder($uti)
                      ->add('username')
-                     ->add('mail')
+                     ->add('email')
                      ->add('password', PasswordType::class)
                      ->add('confirm_password', PasswordType::class)
                      ->getForm();             
@@ -104,7 +104,8 @@ class SecurityController extends AbstractController
                 return $this->render('security/formUser1.html.twig', [
                     'controller_name' => 'SecurityController',
                     'formUser' => $form->createView(),
-                    'uti' => $uti
+                    'uti' => $uti,
+                    'user' => $user
                 ]);
     }
 }

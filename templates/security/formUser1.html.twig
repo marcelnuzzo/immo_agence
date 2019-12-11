@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formUser 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+        
+        <div class="jumbotron" style="background-color:orange">
+            <h1 style ="text-align:center">Modification de : &nbsp<strong>{{ uti.username }}</strong></h1>
+        </div>                             
+     
+        {{ form_start(formUser) }}
+
+        {{ form_row(formUser.username, {'attr': {'placeholder': "Nom du user"}}) }}
+        {{ form_row(formUser.email, {'attr': {'placeholder': "Mail du user"}}) }}
+        {{ form_row(formUser.password, {'attr': {'placeholder': "Mot de passe du user"}}) }}
+        {{ form_row(formUser.confirm_password, {'attr': {'placeholder': "Confirmation du mot de passe"}}) }}
+        
+        <button type="submit" class="btn btn-success">Modifier</button>
+
+        {{ form_end(formUser) }}
+    
+{% endblock %}
