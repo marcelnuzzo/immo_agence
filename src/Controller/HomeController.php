@@ -4,9 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Bien;
 use App\Entity\Categorie;
-//use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -49,14 +50,20 @@ class HomeController extends AbstractController
      * @Route("/bien", name="bien")
      *  
      */
-    public function bien()
+    public function bien(PaginatorInterface $paginator, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Bien::class);
-        $biens = $repo->findAll();
-        
+        $repo1 = $this->getDoctrine()->getRepository(Bien::class);
+        $biens = $paginator->paginate(
+            $repo->findAll(),
+            $request->query->getInt('page', 1), /*page number*/
+             15 /*limit per page*/
+        );
+        $bien = $repo1->findAll();
         return $this->render('home/bien.html.twig', [
             'controller_name' => 'AdminController',
-            'biens'=> $biens
+            'biens'=> $biens,
+            'bien' => $bien
         ]);
     }
 
@@ -67,6 +74,23 @@ class HomeController extends AbstractController
     {
         return $this->render('home/admin.html.twig', [
             'controller_name' => 'HomeController',
+        ]);
+    }
+
+    /**
+     * @Route("/home1/{id}", name="home_show")
+     */
+    public function show($id, Request $request, EntityManagerInterface $manager)
+    {
+        $repo = $this->getDoctrine()->getRepository(Bien::class);
+        $repo1 = $this->getDoctrine()->getRepository(Bien::class);
+        $bien = $repo->find($id);
+        $biens = $repo1->findAll();
+               
+        return $this->render('home/show.html.twig', [
+            'id' => $bien->getId(),
+            'bien'=> $bien,
+            'biens'=> $biens
         ]);
     }
 }

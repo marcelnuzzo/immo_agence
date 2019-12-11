@@ -5,17 +5,53 @@
 {% block body %}
 
 <div class="jumbotron">
-    {%for bien in biens | slice(10,length=5) %}
-                        
-        <h3>{{bien.description}}</h3>
-        
-        <img src=" {{ bien.image }} " alt=""  width="220">
-        <p>{{ bien.surface }}</p>
-        
-        <a href="{{ path('blog_show', {'id':bien.id}) }}" class="btn btn-primary"> Lire la suite </a> 
-         <hr>  
-    {% endfor%}
-
+     <div><a id="cRetour" class="cInvisible" href="#haut">page up</a></div>
+     <h1 id="haut" style="text-decoration:underline;color:blue;text-align:center">Liste des biens immobiliers</h1>
+     <div class="container-fluid">
+        <section class='articles'>
+            <div class="row">
+                <div class="col-6">
+                    {%for bien in biens | slice(0,length=5) %}
+                        <h2>{{bien.description}}</h2>
+                        <div class = "metadata"> Emit le <strong style="color:blue">{{ bien.createdAt | date('d/m/Y') }}</strong style="color:blue"> à <strong style="color:blue">{{ bien.createdAt | date  ('H:i') }}</strong> dans la catégorie <strong style="color:blue">{{ bien.categorie.libelle }}</strong></strong> de type <strong style="color:blue">{{ bien.tipe.libelle }}</strong>
+                        </div>
+                        <div class = "content">
+                            <p>
+                            <img src=" {{ bien.image }} " alt="" width="220">
+                            </p>
+                            <div>
+                            <a href="{{ path('home_show', {'id':bien.id}) }}" class="btn btn-primary"> Lire la suite </a> 
+                            </div>     
+                        </div>
+                        <hr>   
+                    {% endfor%}
+                </div>
+                <div class="col-6">
+                    {%for bien in biens | slice(5,length=5) %}
+                        <h2>{{bien.description}}</h2>
+                        <div class = "metadata"> Emit le <strong style="color:blue">{{ bien.createdAt | date('d/m/Y') }}</strong style="color:blue"> à <strong style="color:blue">{{ bien.createdAt | date  ('H:i') }}</strong> dans la catégorie <strong style="color:blue">{{ bien.categorie.libelle }}</strong></strong> de type <strong style="color:blue">{{ bien.tipe.libelle }}</strong>
+                        </div>
+                        <div class = "content">
+                            <p>
+                            <img src=" {{ bien.image }} " alt="" width="220">
+                            </p>
+                            <div>
+                            <a href="{{ path('home_show', {'id':bien.id}) }}" class="btn btn-primary"> Lire la suite </a> 
+                            </div>     
+                        </div>
+                        <hr>   
+                    {% endfor%}
+                </div>
+        <section>
+    </div>
 </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        window.onscroll = function(ev) {
+            document.getElementById("cRetour").className = (window.pageYOffset > 100) ? "cVisible" : "cInvisible";
+        };
+    });
+</script>
 
 {% endblock %}

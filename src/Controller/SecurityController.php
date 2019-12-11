@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Bien;
 use App\Entity\User;
-//use App\Form\FormUserType;
 use App\Entity\Contact;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +26,6 @@ class SecurityController extends AbstractController
 
     /**
     * @Route("security/formUser", name="security_formUser")
-    * 
     */
     public function formUser(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
@@ -76,34 +74,37 @@ class SecurityController extends AbstractController
     public function logout() {}
 
     /**
-    * @Route("security/formUser", name="security_formUser")
+    * @Route("security/formUser1", name="security_formUser1")
     * 
     */
-    public function formContact(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function formUser1(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, User $user = null)
     {
-        $contact = new Contact();
-        
-        $form = $this->createFormBuilder($contact)
-                     ->add('firstname')
-                     ->add('lastname')
-                     ->add('email')
-                     ->add('phone')
-                     ->add('message')
-                     ->getForm();
-                     
+       
+        $uti = $this->getUser();
+       
+        $form = $this->createFormBuilder($uti)
+                     ->add('username')
+                     ->add('mail')
+                     ->add('password', PasswordType::class)
+                     ->add('confirm_password', PasswordType::class)
+                     ->getForm();             
            
                 $form->handleRequest($request);
                
-                if($form->isSubmitted() && $form->isValid()) {                    
-                    $manager->persist($contact);
+                if($form->isSubmitted() && $form->isValid()) {
+                    $hash = $encoder->encodePassword($user, $user->getPassword());
+                    $user->setPassword($hash);
+                    
+                    $manager->persist($user);
                     $manager->flush();
-                    //$this->addFlash('success', 'Votre compte à bien été enregistré.');
-                        return $this->redirectToRoute('security');
+                    
+                        return $this->redirectToRoute('home',['id' => $user->getId()
+                        ]);
                 }
-
-        return $this->render('security/formUser.html.twig', [
-            'controller_name' => 'SecurityController',
-            'formUser' => $form->createView()
-        ]);
+                return $this->render('security/formUser1.html.twig', [
+                    'controller_name' => 'SecurityController',
+                    'formUser' => $form->createView(),
+                    'uti' => $uti
+                ]);
     }
 }

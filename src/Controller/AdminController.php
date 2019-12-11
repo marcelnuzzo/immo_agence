@@ -16,18 +16,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="index_admin")
+     * @Route("/admin", name="admin_index")
      */
     public function index()
     {
-        return $this->render('admin/index_admin.html.twig', [
+        return $this->render('admin/admin_index.html.twig', [
             'controller_name' => 'AdminController',
         ]);
     }
 
     /**
-     * @Route("/index_categorie", name="index_categorie")
-     *  @Route("/admin/{id}/editCat", name="admin_editCat")
+     * @Route("/admin_categorie", name="admin_categorie")
      */
     public function categorie()
     {
@@ -35,36 +34,35 @@ class AdminController extends AbstractController
         
         $categories = $repo->findAll();
        
-        return $this->render('admin/index_categorie.html.twig', [
+        return $this->render('admin/admin_categorie.html.twig', [
             'controller_name' => 'AdminController',
             'categories'=> $categories
         ]);
     }
 
     /**
-     * @Route("/index_tipe", name="index_tipe")
-     *  @Route("/admin/{id}/editTip", name="admin_editTip")
+     * @Route("/admin_tipe", name="admin_tipe")
      */
     public function tipe()
     {
         $repo = $this->getDoctrine()->getRepository(Tipe::class);
         $tipes = $repo->findAll();
         
-        return $this->render('admin/index_tipe.html.twig', [
+        return $this->render('admin/admin_tipe.html.twig', [
             'controller_name' => 'AdminController',
             'tipes'=> $tipes
         ]);
     }
 
     /**
-     * @Route("/index_bien", name="index_bien")
+     * @Route("/admin_bien", name="admin_bien")
      */
     public function bien()
     {
         $repo = $this->getDoctrine()->getRepository(Bien::class);
         $biens = $repo->findAll();
         
-        return $this->render('admin/index_bien.html.twig', [
+        return $this->render('admin/admin_bien.html.twig', [
             'controller_name' => 'AdminController',
             'biens'=> $biens
         ]);
@@ -72,7 +70,6 @@ class AdminController extends AbstractController
 
     /**
     * @Route("/admin/newCat", name="admin_createCat")
-    * 
     */
     public function formulaireCat(Request $request, EntityManagerInterface $manager, Categorie $categorie = null)
     {
@@ -94,7 +91,7 @@ class AdminController extends AbstractController
                     $manager->persist($categorie);
                     $manager->flush();
             
-                        return $this->redirectToRoute('index_categorie');
+                        return $this->redirectToRoute('admin_categorie');
                 }
 
                 return $this->render('admin/createCat.html.twig', [
@@ -128,7 +125,7 @@ class AdminController extends AbstractController
                     $manager->persist($categorie);
                     $manager->flush();
             
-                        return $this->redirectToRoute('index_categorie',  ['id' => $categorie->getId()
+                        return $this->redirectToRoute('admin_categorie',  ['id' => $categorie->getId()
                         ]);
                 }
 
@@ -164,7 +161,7 @@ class AdminController extends AbstractController
                     $manager->persist($tipe);
                     $manager->flush();
             
-                        return $this->redirectToRoute('index_tipe');
+                        return $this->redirectToRoute('admin_tipe');
                 }
 
                 return $this->render('admin/createTip.html.twig', [
@@ -194,7 +191,7 @@ class AdminController extends AbstractController
                     $manager->persist($tipe);
                     $manager->flush();
             
-                        return $this->redirectToRoute('index_type',  ['id' => $tipe->getId()
+                        return $this->redirectToRoute('admin_type',  ['id' => $tipe->getId()
                         ]);
                 }
 
@@ -250,7 +247,7 @@ class AdminController extends AbstractController
             $manager->flush();
             $this->addFlash('success', 'Bien créé');
 
-            return $this->redirectToRoute('index_bien');
+            return $this->redirectToRoute('admin_bien');
         }
 
     return $this->render("admin/createBie.html.twig", [
@@ -299,7 +296,7 @@ class AdminController extends AbstractController
            
             $manager->flush();
 
-            return $this->redirectToRoute('index_bien', ['id' => $bien->getId()
+            return $this->redirectToRoute('admin_bien', ['id' => $bien->getId()
             ]);
         }
 
@@ -320,7 +317,7 @@ class AdminController extends AbstractController
         $Manager->remove($bien);
         $Manager->flush();
         
-        return $this->redirectToRoute('index_bien');
+        return $this->redirectToRoute('admin_bien');
        
     }
 
@@ -335,7 +332,7 @@ class AdminController extends AbstractController
         $Manager->remove($categorie);
         $Manager->flush();
         
-        return $this->redirectToRoute('index_categorie');
+        return $this->redirectToRoute('admin_categorie');
        
     }
 
@@ -349,7 +346,7 @@ class AdminController extends AbstractController
         $Manager->remove($tipe);
         $Manager->flush();
         
-        return $this->redirectToRoute('index_tipe');
+        return $this->redirectToRoute('admin_tipe');
        
     }
 

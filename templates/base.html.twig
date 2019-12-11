@@ -68,7 +68,7 @@ a#cRetour.cVisible{
                         <a class="nav-link" href="{{path('easyadmin')}}" target="blank" tabindex="-1" aria-disabled="true">Admin</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('index_admin') }} ">Index admin</a>
+                        <a class="nav-link" href="{{ path('admin_index') }} ">Index admin</a>
                     </li>
                     {% endif %}
                     </div>
@@ -82,9 +82,15 @@ a#cRetour.cVisible{
                           <a class="nav-link" href="{{ path('security_login') }} ">Connexion</a>
                       </li>
                     {% else %}
-                      <li class="nav-item">
-                          <a class="nav-link" href="{{ path('security_logout') }} ">Déconnexion</a>
-                      </li>
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Profil utilisateur
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="{{ path('security_logout') }}">Déconnexion</a>
+                          <a class="dropdown-item" href="{{ path('security_formUser1') }}">Modifier profil</a>
+                        </div>
+                      </div>
                     {% endif %}
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
