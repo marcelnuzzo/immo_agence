@@ -4,10 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Bien;
 use App\Entity\Categorie;
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -17,10 +16,17 @@ class HomeController extends AbstractController
      * @Route("/home", name="home")
      * @Route("/", name="home")
      */
-    public function index()
+    public function index(PaginatorInterface $paginator,Request $request)
     {
+        $repo = $this->getDoctrine()->getRepository(Bien::class);
+        $biens = $paginator->paginate(
+            $repo->findAll(),
+            $request->query->getInt('page', 1), /*page number*/
+             15 /*limit per page*/
+        );
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'biens' => $biens
         ]);
     }
 
@@ -50,7 +56,7 @@ class HomeController extends AbstractController
      * @Route("/bien", name="bien")
      *  
      */
-    public function bien(PaginatorInterface $paginator, Request $request)
+    public function bien(PaginatorInterface $paginator,Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Bien::class);
         $repo1 = $this->getDoctrine()->getRepository(Bien::class);

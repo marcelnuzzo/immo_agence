@@ -80,9 +80,9 @@ class SecurityController extends AbstractController
     public function formUser1(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, User $user = null)
     {
        
-        $uti = $this->getUser();
+        $user = $this->getUser();
        
-        $form = $this->createFormBuilder($uti)
+        $form = $this->createFormBuilder($user)
                      ->add('username')
                      ->add('email')
                      ->add('password', PasswordType::class)
@@ -104,7 +104,6 @@ class SecurityController extends AbstractController
                 return $this->render('security/formUser1.html.twig', [
                     'controller_name' => 'SecurityController',
                     'formUser' => $form->createView(),
-                    'uti' => $uti,
                     'user' => $user
                 ]);
     }

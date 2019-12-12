@@ -7,7 +7,7 @@
 <div class = "jumbotron">
     <h1 style="text-align:center;color:blue">Bien n° : {{ bien.id }}
     <h2>{{bien.description}}</h2>
-    <div class = "metadata">Emit le &nbsp<strong>{{ bien.createdAt | date('d/m/Y)') }}</strong>&nbsp à &nbsp{{ bien.createdAt | date  ('H:i') }}&nbsp dans la catégorie &nbsp<strong>{{ bien.categorie.libelle }}</strong>et de type :&nbsp{{ bien.tipe.libelle }}
+    <div class = "metadata">Emit le &nbsp<strong>{{ bien.createdAt | date('d/m/Y)') }}</strong>&nbsp à &nbsp{{ bien.createdAt | date  ('H:i') }}&nbsp dans la catégorie &nbsp<strong>{{ bien.categorie.libelle }}&nbsp</strong>et de type :&nbsp<strong>{{ bien.tipe.libelle }}</strong>
     </div>
     </br>
     <div class = "content">
