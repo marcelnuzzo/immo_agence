@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}/types{% endblock %}
+
+{% block body %}
+
+<div class = "jumbotron">
+    <h1 id="haut" style="text-decoration:underline;color:blue;text-align:center">Liste des types</h1>
+</div>
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th><h2>Libellé</h2></th>
+    </tr>
+    {%for tipe in tipes %}
+        <tr>
+            <td>{{ tipe.libelle }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
