@@ -68,6 +68,17 @@ a#cRetour.cVisible{
                     <li>
                         <a class="nav-link" href="{{path('contact')}}">Contact<span class="sr-only">(current)</span></a>
                     </li>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          filtre catégories
+                        </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ path('appart') }}">appart</a>
+                        <a class="dropdown-item" href="{{ path('terrain') }}">terrain</a>
+                        <a class="dropdown-item" href="{{ path('maison') }}">maison</a>
+                        <a class="dropdown-item" href="{{ path('igloo') }}">igloo</a>
+                      </div>
+                    </div> 
                     <li>
                     {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">
@@ -77,7 +88,7 @@ a#cRetour.cVisible{
                         <a class="nav-link" href="{{ path('admin_index') }} ">Index admin</a>
                     </li>
                     {% endif %}
-                    </div>
+                    </div>    
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                     {% if not app.user %}

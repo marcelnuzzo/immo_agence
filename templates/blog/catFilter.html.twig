@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}/catégorie filter{% endblock %}
+
+{% block body %}
+
+<div class = "jumbotron">
+    <h1 style="text-align:center"><mark>Les catégories</mark></h1>
+</div>
+    </br>
+    <section class='categories'>
+        {%for categorie in categories %}
+            <ul>
+                <li>
+                    <h2>{{ categorie.libelle }}</h2>
+                </li>
+            </ul>
+        <hr>
+        {% endfor%}
+    </section>
+</div>
+
+    
+</div>
+{% endblock %}

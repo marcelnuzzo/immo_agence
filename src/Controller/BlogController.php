@@ -81,4 +81,35 @@ class BlogController extends AbstractController
             'formCommentaire' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/appart", name="appart")
+     * @Route("/terrain", name="terrain")
+     * @Route("/maison", name="maison")
+     * @Route("/igloo", name="igloo")
+     */
+    public function catFilter (Request $request)
+    {
+        $currentRoute = $request->attributes->get('_route');
+
+        $libelle="";
+        if($currentRoute == "appart")
+            $libelle = 'appartement';
+        else if($currentRoute == "terrain")
+            $libelle = 'terrain';
+        else if($currentRoute == "maison")
+            $libelle = "maison";
+        else if($currentRoute == "igloo")
+            $libelle = "igloo";
+
+        $categories = $this->getDoctrine()
+                           ->getRepository(Categorie::class)
+                           ->findByCatFilter($libelle);
+
+        return $this->render('blog/catFilter.html.twig', [
+            'controller_name' => 'BlogController',
+            'categories'=> $categories,
+            'libelle' => $libelle
+        ]);
+    }
 }
