@@ -137,4 +137,30 @@ class BlogController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/categorieFiltre", name="categorieFiltre")
+     */
+    public function findAllBienInByCategory()
+    {
+
+        $repo = $this->getDoctrine()->getRepository(Bien::class);
+        $biens = $repo->findAll();
+
+        $libelle = 'appartement';
+        
+        $categories = $this->getDoctrine()
+        ->getRepository(Categorie::class)
+        ->findAllBienInByCategory($libelle);
+
+        //dd($biens);
+        //dd($categories);
+
+        return $this->render('blog/categorieFiltre.html.twig', [
+            'controller_name' => 'BlogController',
+            'categories'=> $categories,
+            'biens' => $biens
+        ]);
+
+    }
 }

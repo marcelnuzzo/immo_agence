@@ -60,5 +60,23 @@ class CategorieRepository extends ServiceEntityRepository
         ->getResult()
     ;
     }
+
+    public function findAllBienInByCategory()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM categorie,bien
+            WHERE categorie.id=bien.categorie_id
+            AND categorie.libelle="appartement"
+            ';
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['libelle' => 'appartement']);
+
+            // returns an array of arrays (i.e. a raw data set)
+            return $stmt->fetchAll();
+
+    }
     
 }

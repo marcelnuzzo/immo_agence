@@ -48,5 +48,4 @@ class BienRepository extends ServiceEntityRepository
     }
     */
 
-    
 }

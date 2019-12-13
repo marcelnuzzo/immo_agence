@@ -63,6 +63,9 @@ a#cRetour.cVisible{
                         <a class="nav-link" href="{{ path('cat') }}">Catégories</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ path('categorieFiltre') }}">Cat appartement</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('tip') }}">Types</a>
                     </li>
                     <li>
@@ -78,7 +81,8 @@ a#cRetour.cVisible{
                         <a class="dropdown-item" href="{{ path('maison') }}">maison</a>
                         <a class="dropdown-item" href="{{ path('igloo') }}">igloo</a>
                       </div>
-                    </div> 
+                    </div>
+                     
                     <li>
                     {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">
