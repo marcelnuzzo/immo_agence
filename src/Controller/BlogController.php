@@ -90,6 +90,10 @@ class BlogController extends AbstractController
      */
     public function catFilter (Request $request)
     {
+        $repo = $this->getDoctrine()->getRepository(Categorie::class);
+        
+        $categories = $repo->findAll();
+
         $currentRoute = $request->attributes->get('_route');
 
         $libelle="";
@@ -105,11 +109,32 @@ class BlogController extends AbstractController
         $categories = $this->getDoctrine()
                            ->getRepository(Categorie::class)
                            ->findByCatFilter($libelle);
-
+        
         return $this->render('blog/catFilter.html.twig', [
             'controller_name' => 'BlogController',
             'categories'=> $categories,
             'libelle' => $libelle
         ]);
+    }
+
+    /**
+     * @Route("/bienCat/{id}", name="bienCat" )
+     */
+    public function bienCat($id, Request $request, EntityManagerInterface $manager)
+    {
+        $repo = $this->getDoctrine()->getRepository(Categorie::class);
+        $repo1 = $this->getDoctrine()->getRepository(Categorie::class);
+        $categorie = $repo->find($id);
+        $categories = $repo1->findAll();
+        $repo2 = $this->getDoctrine()->getRepository(Bien::class);
+        $bien = $repo2->findAll();
+
+        return $this->render('blog/bienCat.html.twig', [
+            'id' => $categorie->getId(),
+            'categorie'=> $categorie,
+            'categories'=> $categories,
+            'bien'=> $bien
+        ]);
+
     }
 }

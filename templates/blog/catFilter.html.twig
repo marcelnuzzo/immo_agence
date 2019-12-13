@@ -14,6 +14,9 @@
                 <li>
                     <h2>{{ categorie.libelle }}</h2>
                 </li>
+                <div>
+                    <a href="{{ path('bienCat', {'id':categorie.id}) }}" class="btn btn-primary"> Lire la suite </a> 
+                </div>  
             </ul>
         <hr>
         {% endfor%}
