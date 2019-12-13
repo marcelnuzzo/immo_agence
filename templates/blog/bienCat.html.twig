@@ -16,13 +16,13 @@
             <h3><strong style="color:blue">Description</strong></h3>
         </div>
         <div class="col-3">
-            <h3><strong style="color:blue">Surface</strong></h3>
+            <h3><strong style="color:blue">Surface (m²)</strong></h3>
         </div>
         <div class="col-3">
-            <h3><strong style="color:blue">Etage</strong></h3>
+            <h3><strong style="color:blue">Etage (ième)</strong></h3>
         </div>
         <div class="col-3">
-            <h3><strong style="color:blue">Chambre</strong></h3>
+            <h3><strong style="color:blue">Chambres (nb)</strong></h3>
         </div>
     </div>
     {% for bien in categorie.biens %}    
@@ -33,12 +33,21 @@
         <div class="col-3">
                 {{ bien.surface  }}
         </div>
+        {% if bien.etage != null %}
         <div class="col-3">
             {{ bien.etage }}
         </div>
         <div class="col-3">
             {{ bien.chambre }}
         </div>
+        {% else %}
+        <div class="col-3">
+             - 
+        </div>
+        <div class="col-3">
+             - 
+        </div>
+        {% endif %}
     </div>
     <hr>   
     {% endfor %}
