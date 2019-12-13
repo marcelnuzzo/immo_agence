@@ -83,11 +83,11 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/appart", name="appart")
-     * @Route("/terrain", name="terrain")
-     * @Route("/maison", name="maison")
-     * @Route("/igloo", name="igloo")
-     */
+    * @Route("/appart", name="appart")
+    * @Route("/terrain", name="terrain")
+    * @Route("/maison", name="maison")
+    * @Route("/igloo", name="igloo")
+    */
     public function catFilter (Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Categorie::class);
@@ -116,6 +116,7 @@ class BlogController extends AbstractController
             'libelle' => $libelle
         ]);
     }
+    
 
     /**
      * @Route("/bienCat/{id}", name="bienCat" )
@@ -138,9 +139,10 @@ class BlogController extends AbstractController
 
     }
 
-    /**
-     * @Route("/categorieFiltre", name="categorieFiltre")
-     */
+    ///**
+    // * @Route("/categorieFiltre", name="categorieFiltre")
+    // */
+    /*
     public function findAllBienInByCategory()
     {
 
@@ -148,6 +150,46 @@ class BlogController extends AbstractController
         $biens = $repo->findAll();
 
         $libelle = 'appartement';
+        
+        $categories = $this->getDoctrine()
+        ->getRepository(Categorie::class)
+        ->findAllBienInByCategory($libelle);
+
+        //dd($biens);
+        //dd($categories);
+
+        return $this->render('blog/categorieFiltre.html.twig', [
+            'controller_name' => 'BlogController',
+            'categories'=> $categories,
+            'biens' => $biens
+        ]);
+
+    }
+    */
+
+    /**
+     * @Route("/appart2", name="appart2")
+     * @Route("/terrain2", name="terrain2")
+     * @Route("/maison2", name="maison2")
+     * @Route("/igloo2", name="igloo2")
+     */
+    public function findAllBienInByCategory(Request $request)
+    {
+
+        $repo = $this->getDoctrine()->getRepository(Bien::class);
+        $biens = $repo->findAll();
+
+        $currentRoute = $request->attributes->get('_route');
+
+        $libelle = '';
+        if($currentRoute == "appart2")
+            $libelle = 'appartement';
+        else if($currentRoute == "terrain2")
+            $libelle = 'terrain';
+        else if($currentRoute == "maison2")
+            $libelle = "maison";
+        else if($currentRoute == "igloo2")
+            $libelle = "igloo";
         
         $categories = $this->getDoctrine()
         ->getRepository(Categorie::class)

@@ -62,9 +62,18 @@ a#cRetour.cVisible{
                      <li class="nav-item">
                         <a class="nav-link" href="{{ path('cat') }}">Catégories</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('categorieFiltre') }}">Cat appartement</a>
-                    </li>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          filtre catégories2
+                        </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ path('appart2') }}">appart</a>
+                        <a class="dropdown-item" href="{{ path('terrain2') }}">terrain</a>
+                        <a class="dropdown-item" href="{{ path('maison2') }}">maison</a>
+                        <a class="dropdown-item" href="{{ path('igloo2') }}">igloo</a>
+                      </div>
+                    </div>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('tip') }}">Types</a>
                     </li>
@@ -82,8 +91,6 @@ a#cRetour.cVisible{
                         <a class="dropdown-item" href="{{ path('igloo') }}">igloo</a>
                       </div>
                     </div>
-                     
-                    <li>
                     {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{path('easyadmin')}}" target="blank" tabindex="-1" aria-disabled="true">Admin</a>
