@@ -47,4 +47,23 @@ class TipeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllBienInByType($libelle)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM categorie,tipe,bien
+            WHERE categorie.id=bien.categorie_id
+            AND tipe.id=bien.tipe_id
+            AND tipe.libelle=:libelle
+            ';
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['libelle' => $libelle]);
+
+            // returns an array of arrays (i.e. a raw data set)
+            return $stmt->fetchAll();
+
+    }
 }
