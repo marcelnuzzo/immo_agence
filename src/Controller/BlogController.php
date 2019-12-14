@@ -212,6 +212,6 @@ class BlogController extends AbstractController
      */
     public function tipFilter ()
     {
-        
+
     }
 }

@@ -5,24 +5,15 @@
 {% block body %}
 
 <div class = "jumbotron">
-    <h1 style="text-align:center"><mark>Les catégories</mark></h1>
+    <h1 style="text-align:center"><mark>Catégorie :</mark></h1>
 </div>
-    </br>
-    <section class='categories'>
+    <section class="categorie" style="text-align:center">
         {%for categorie in categories %}
-            <ul>
-                <li>
-                    <h2>{{ categorie.libelle }}</h2>
-                </li>
-                <div>
-                    <a href="{{ path('bienCat', {'id':categorie.id}) }}" class="btn btn-primary"> Lire la suite </a> 
-                </div>  
-            </ul>
-        <hr>
+            <h2>{{ categorie.libelle }}</h2>
+            <div>
+                <a href="{{ path('bienCat', {'id':categorie.id}) }}" class="btn btn-primary"> Lire la suite </a> 
+            </div>  
         {% endfor%}
     </section>
-</div>
 
-    
-</div>
 {% endblock %}

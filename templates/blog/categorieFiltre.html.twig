@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}/Liste de la catégorie{% endblock %}
+{% block title %}{{ parent() }}/Liste des biens de la catégorie{% endblock %}
 
 {% block body %}
 
@@ -9,19 +9,33 @@
 </div>
 <table class="table table-striped table-bordered table-hover">
     <tr>
-        <th><h2>id</h2></th>
-        <th><h2>LibelléCatégorie</h2></th>
-        <th><h2>description</h2></th>
-        <th><h2>surface</h2></th>
-        <th><h2>etage</h2></th>
+        <th><h3>id</h3></th>
+        <th><h3>Libellé catégorie</h3></th>
+        <th><h3>description</h3></th>
+        <th><h3>image</h3></th>
+        <th><h3>surface</h3></th>
+        <th><h3>etage</h3></th>
+        <th><h3>statut</h3></th>
+        <th><h3>Date</h3></th>
     </tr>
     {%for categorie in categories %}
         <tr>
             <td>{{ categorie.id }}</td>
             <td>{{ categorie.libelle }}</td>
             <td>{{ categorie.description }}</td>
+            <td>
+                <p>
+                    <img src=" {{ categorie.image }} " alt="" width="220">
+                </p>
+            </td>
             <td>{{ categorie.surface }}</td>
             <td>{{ categorie.etage }}</td>
+            {% if categorie.statut == "archivé" %}
+                <td style="background-color:red">{{ categorie.statut }}</td>
+            {% else %}
+                <td style="background:cyan">{{ categorie.statut }}</td>
+            {% endif %}
+            <td>{{ categorie.created_at | date('d/m/Y') }}</td>
         </tr>
     {% endfor %}
 </table>
