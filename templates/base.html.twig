@@ -44,6 +44,14 @@ a#cRetour.cVisible{
   opacity:1;
 }
 </style>
+<style>
+.dropdown-submenu{position:relative;}
+.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+.dropdown-submenu:hover>.dropdown-menu{display:block;}
+.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+</style>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="{{ path('home') }} ">SymBlog</a>
@@ -76,9 +84,6 @@ a#cRetour.cVisible{
                         <a class="dropdown-item" href="{{ path('igloo2') }}">igloo</a>
                       </div>
                     </div>
-                    <li>
-                        <a class="nav-link" href="{{path('contact')}}">Contact<span class="sr-only">(current)</span></a>
-                    </li>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           filtre catégories
@@ -90,6 +95,36 @@ a#cRetour.cVisible{
                         <a class="dropdown-item" href="{{ path('igloo') }}">igloo</a>
                       </div>
                     </div>
+                    <li>
+                        <a class="nav-link" href="{{path('contact')}}">Contact<span class="sr-only">(current)</span></a>
+                    </li>
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sélection type
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                          <a tabindex="-1" href="#">Location</a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Appartement</a></li>
+                            <li><a href="#">Terrain</a></li>
+                            <li><a href="#">Maison</a></li>
+                            <li><a href="#">Igloo</a></li>
+                          </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                          <a tabindex="-1" href="#">Vente</a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Appartement</a></li>
+                            <li><a href="#">Terrain</a></li>
+                            <li><a href="#">Maison</a></li>
+                            <li><a href="#">Igloo</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>      
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
                     {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{path('easyadmin')}}" target="blank" tabindex="-1" aria-disabled="true">Admin</a>
@@ -98,9 +133,6 @@ a#cRetour.cVisible{
                         <a class="nav-link" href="{{ path('admin_index') }} ">Index admin</a>
                     </li>
                     {% endif %}
-                    </div>    
-                  </ul>
-                  <ul class="nav navbar-nav navbar-right">
                     {% if not app.user %}
                       <li>
                         <a class="nav-link" href="{{path('security_formUser')}}">Inscription</a>
@@ -119,12 +151,6 @@ a#cRetour.cVisible{
                         </div>
                       </div>
                     {% endif %}
-                      <div>
-                        <form class="form-inline my-2 my-lg-0">
-                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                      </div>
                   </ul>
             </div>
         </nav>

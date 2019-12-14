@@ -205,4 +205,13 @@ class BlogController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/location", name="location")
+     * @Route("/vente", name="vente")
+     */
+    public function tipFilter ()
+    {
+        
+    }
 }
