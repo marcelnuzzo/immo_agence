@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}/Liste des biens du type de transaction{% endblock %}
+
+{% block body %}
+
+<div class = "jumbotron">
+    <h1 id="haut" style="text-decoration:underline;color:blue;text-align:center">Liste des ventes</h1>
+</div>
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th><h3>catégorie</h3></th>
+        <th><h3>description</h3></th>
+        <th><h3>image</h3></th>
+        <th><h3>surface</h3></th>
+        <th><h3>chambre</h3></th>
+        <th><h3>étage</h3></th>
+        <th><h3>statut</h3></th>
+        <th><h3>Date</h3></th>
+    </tr>
+    {%for tipe in tipes %}
+        <tr>
+            <td>{{ tipe.categorie_id }}</td>
+            <td>{{ tipe.description }}</td>
+            <td>
+                <p>
+                    <img src=" {{ tipe.image }} " alt="" width="220">
+                </p>
+            </td>
+            <td>{{ tipe.surface }}</td>
+            <td>{{ tipe.chambre }}</td>
+            <td>{{ tipe.etage }}</td>
+            {% if tipe.statut == "archivé" %}
+                <td style="background-color:red">{{ tipe.statut }}</td>
+            {% else %}
+                <td style="background:cyan">{{ tipe.statut }}</td>
+            {% endif %}
+            <td>{{ tipe.created_at | date('d/m/Y') }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

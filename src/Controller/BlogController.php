@@ -139,34 +139,6 @@ class BlogController extends AbstractController
 
     }
 
-    ///**
-    // * @Route("/categorieFiltre", name="categorieFiltre")
-    // */
-    /*
-    public function findAllBienInByCategory()
-    {
-
-        $repo = $this->getDoctrine()->getRepository(Bien::class);
-        $biens = $repo->findAll();
-
-        $libelle = 'appartement';
-        
-        $categories = $this->getDoctrine()
-        ->getRepository(Categorie::class)
-        ->findAllBienInByCategory($libelle);
-
-        //dd($biens);
-        //dd($categories);
-
-        return $this->render('blog/categorieFiltre.html.twig', [
-            'controller_name' => 'BlogController',
-            'categories'=> $categories,
-            'biens' => $biens
-        ]);
-
-    }
-    */
-
     /**
      * @Route("/appart2", name="appart2")
      * @Route("/terrain2", name="terrain2")
@@ -210,8 +182,30 @@ class BlogController extends AbstractController
      * @Route("/location", name="location")
      * @Route("/vente", name="vente")
      */
-    public function tipFilter ()
+    public function tipFilter (Request $request)
     {
+        $repo = $this->getDoctrine()->getRepository(Bien::class);
+        $biens = $repo->findAll();
+        $repo1 = $this->getDoctrine()->getRepository(Tipe::class);
+        $tipe = $repo1->findAll();
 
+        $currentRoute = $request->attributes->get('_route');
+
+        $libelle = '';
+        if($currentRoute == "location")
+            $libelle = 'location';
+        else if($currentRoute == "vente")
+            $libelle = 'ventes';
+
+            $tipes = $this->getDoctrine()
+            ->getRepository(Tipe::class)
+            ->findByTypeLoc($libelle);
+
+            return $this->render('blog/vente.html.twig', [
+                'controller_name' => 'BlogController',
+                'tipes'=> $tipes,
+                'biens' => $biens,
+                'tipe' => $tipe
+            ]);
     }
 }

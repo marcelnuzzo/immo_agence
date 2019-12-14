@@ -48,14 +48,13 @@ class TipeRepository extends ServiceEntityRepository
     }
     */
 
-    public function findAllBienInByType($libelle)
+    public function findByTypeLoc($libelle)
     {
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT * FROM categorie,tipe,bien
-            WHERE categorie.id=bien.categorie_id
-            AND tipe.id=bien.tipe_id
+            SELECT * FROM tipe,bien
+            WHERE tipe.id=bien.tipe_id
             AND tipe.libelle=:libelle
             ';
 
