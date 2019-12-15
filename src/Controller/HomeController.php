@@ -22,7 +22,7 @@ class HomeController extends AbstractController
         $biens = $paginator->paginate(
             $repo->findAll(),
             $request->query->getInt('page', 1), /*page number*/
-             15 /*limit per page*/
+             10 /*limit per page*/
         );
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
@@ -63,7 +63,7 @@ class HomeController extends AbstractController
         $biens = $paginator->paginate(
             $repo->findAll(),
             $request->query->getInt('page', 1), /*page number*/
-             15 /*limit per page*/
+             10 /*limit per page*/
         );
         $bien = $repo1->findAll();
         return $this->render('home/bien.html.twig', [

@@ -14,6 +14,7 @@
                 <div class="col-6">
                     {%for bien in biens | slice(0,length=5) %}
                         <h2>{{bien.description}}</h2>
+                        <p>{{ bien.id }}</p>
                         <div class = "metadata"> Emit le <strong style="color:blue">{{ bien.createdAt | date('d/m/Y') }}</strong style="color:blue"> à <strong style="color:blue">{{ bien.createdAt | date  ('H:i') }}</strong> dans la catégorie <strong style="color:blue">{{ bien.categorie.libelle }}</strong></strong> de type <strong style="color:blue">{{ bien.tipe.libelle }}</strong>
                         </div>
                         <div class = "content">
@@ -30,6 +31,7 @@
                 <div class="col-6">
                     {%for bien in biens | slice(5,length=5) %}
                         <h2>{{bien.description}}</h2>
+                        <p>{{ bien.id }}</p>
                         <div class = "metadata"> Emit le <strong style="color:blue">{{ bien.createdAt | date('d/m/Y') }}</strong style="color:blue"> à <strong style="color:blue">{{ bien.createdAt | date  ('H:i') }}</strong> dans la catégorie <strong style="color:blue">{{ bien.categorie.libelle }}</strong></strong> de type <strong style="color:blue">{{ bien.tipe.libelle }}</strong>
                         </div>
                         <div class = "content">
