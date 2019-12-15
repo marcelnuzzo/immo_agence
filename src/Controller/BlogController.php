@@ -173,14 +173,15 @@ class BlogController extends AbstractController
         return $this->render('blog/categorieFiltre.html.twig', [
             'controller_name' => 'BlogController',
             'categories'=> $categories,
-            'biens' => $biens
+            'biens' => $biens,
         ]);
 
     }
 
     /**
-     * @Route("/location", name="location")
-     * @Route("/vente", name="vente")
+     * @Route("/location3", name="location3")
+     * @Route("/vente3", name="vente3")
+     *
      */
     public function tipFilter (Request $request)
     {
@@ -192,20 +193,98 @@ class BlogController extends AbstractController
         $currentRoute = $request->attributes->get('_route');
 
         $libelle = '';
-        if($currentRoute == "location")
+        if($currentRoute == "location3")
             $libelle = 'location';
-        else if($currentRoute == "vente")
+        else if($currentRoute == "vente3")
             $libelle = 'ventes';
 
             $tipes = $this->getDoctrine()
             ->getRepository(Tipe::class)
-            ->findByTypeLoc($libelle);
+            ->findByType($libelle);
 
-            return $this->render('blog/vente.html.twig', [
+            return $this->render('blog/venteLoc.html.twig', [
                 'controller_name' => 'BlogController',
                 'tipes'=> $tipes,
                 'biens' => $biens,
-                'tipe' => $tipe
+                'tipe' => $tipe,
+                'libelle' => $libelle
             ]);
     }
+
+    /**
+     * @Route("/location3/appart3", name="location3/appart3")
+     * @Route("/location3/terrain3", name="location3/terrain3")
+     * @Route("/location3/maison3", name="location3/maison3")
+     * @Route("/location3/igloo3", name="location3/igloo3")
+     * @Route("/vente3/appart3", name="vente3/appart3")
+     * @Route("/vente3/terrain3", name="vente3/terrain3")
+     * @Route("/vente3/maison3", name="vente3/maison3")
+     * @Route("/vente3/igloo3", name="vente3/igloo3")
+     */
+    public function tipFilterSpec (Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository(Bien::class);
+        $biens = $repo->findAll();
+        //$repo1 = $this->getDoctrine()->getRepository(Tipe::class);
+        //$tipe = $repo1->findAll();
+        //$repo2 = $this->getDoctrine()->getRepository(Categorie::class);
+        //$categorie = $repo2->findAll();
+        //$repo3 = $this->getDoctrine()->getRepository(Bien::class);
+        //$bien = $repo3->findAll();
+
+        $currentRoute = $request->attributes->get('_route');
+
+        $libelle = '';
+        $libelle2 = '';
+        if($currentRoute == "location3/appart3") {
+            $libelle = 'location';
+            $libelle2 = 'appartement';
+        }
+        else if($currentRoute == "location3/terrain3") {
+            $libelle = 'location';
+            $libelle2 = 'terrain';
+        }
+        else if($currentRoute == "location3/maison3") {
+            $libelle = 'location';
+            $libelle2 = 'maison';
+        }
+        else if($currentRoute == "location3/igloo3") {
+            $libelle = 'location';
+            $libelle2 = 'igloo';
+        }
+        else if($currentRoute == "vente3/appart3") {
+            $libelle = 'ventes';
+            $libelle2 = 'appartement';
+        }
+        else if($currentRoute == "vente3/terrain3") {
+            $libelle = 'ventes';
+            $libelle2 = 'terrain';
+        }
+        else if($currentRoute == "vente3/maison3") {
+            $libelle = 'ventes';
+            $libelle2 = 'maison';
+        }
+        else if($currentRoute == "vente3/igloo3") {
+            $libelle = 'ventes';
+            $libelle2 = 'igloo';
+        }
+
+            $tipes = $this->getDoctrine()
+            ->getRepository(Tipe::class)
+            ->findByTypeCat($libelle, $libelle2);
+
+            //dd($biens);
+            //dd($categories);
+            //dd($tipes);
+            //dd($libelle);
+            //dd($tipe);
+            return $this->render('blog/venteLocBien.html.twig', [
+                'controller_name' => 'BlogController',
+                'tipes'=> $tipes,
+                'biens' => $biens,
+                'libelle' => $libelle,
+                'libelle2' => $libelle2
+            ]);
+    }
+
 }

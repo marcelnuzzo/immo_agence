@@ -48,7 +48,7 @@ class TipeRepository extends ServiceEntityRepository
     }
     */
 
-    public function findByTypeLoc($libelle)
+    public function findByType($libelle)
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -60,6 +60,28 @@ class TipeRepository extends ServiceEntityRepository
 
             $stmt = $conn->prepare($sql);
             $stmt->execute(['libelle' => $libelle]);
+
+            // returns an array of arrays (i.e. a raw data set)
+            return $stmt->fetchAll();
+
+    }
+
+    public function findByTypeCat($libelle, $libelle2)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM tipe,bien,categorie
+            WHERE tipe.id=bien.tipe_id
+            AND categorie.id=bien.categorie_id
+            AND tipe.libelle=:libelle
+            AND categorie.libelle=:libelle2
+            ';
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['libelle' => $libelle,
+                            'libelle2' => $libelle2
+            ]);
 
             // returns an array of arrays (i.e. a raw data set)
             return $stmt->fetchAll();
