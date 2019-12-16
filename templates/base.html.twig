@@ -159,6 +159,11 @@ a#cRetour.cVisible{
                 {{ message }}
             </div>
         {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning" style="text-align:center;color:#000000">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="container">
             {% block body %}{% endblock %}
         </div>

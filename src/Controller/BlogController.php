@@ -281,7 +281,7 @@ class BlogController extends AbstractController
             //dd($libelle);
             //dd($tipe);
             if($tipes == null)
-                $this->addFlash('success', 'Pas de biens dans cette catégorie!');
+                $this->addFlash('warning', 'Pas de biens dans cette catégorie!');
             return $this->render('blog/venteLocBien.html.twig', [
                 'controller_name' => 'BlogController',
                 'tipes'=> $tipes,
