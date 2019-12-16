@@ -202,6 +202,8 @@ class BlogController extends AbstractController
             ->getRepository(Tipe::class)
             ->findByType($libelle);
 
+            //dd($tipes);
+
             return $this->render('blog/venteLoc.html.twig', [
                 'controller_name' => 'BlogController',
                 'tipes'=> $tipes,
@@ -278,6 +280,8 @@ class BlogController extends AbstractController
             //dd($tipes);
             //dd($libelle);
             //dd($tipe);
+            if($tipes == null)
+                $this->addFlash('success', 'Pas de biens dans cette catégorie!');
             return $this->render('blog/venteLocBien.html.twig', [
                 'controller_name' => 'BlogController',
                 'tipes'=> $tipes,

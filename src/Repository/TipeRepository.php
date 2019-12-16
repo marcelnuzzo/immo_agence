@@ -53,8 +53,9 @@ class TipeRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT * FROM tipe,bien
+            SELECT * FROM tipe,bien,categorie
             WHERE tipe.id=bien.tipe_id
+            AND categorie.id=bien.categorie_id
             AND tipe.libelle=:libelle
             ';
 
