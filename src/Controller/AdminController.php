@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -206,7 +207,7 @@ class AdminController extends AbstractController
      * @Route("/admin/newBie", name="admin_createBie")
      * 
      */
-    public function formBie(Bien $bien = null, Categorie $categorie = null, Request $request, EntityManagerInterface $manager)
+    public function formBie( \Swift_Mailer $mailer, Bien $bien = null, Categorie $categorie = null, Request $request, EntityManagerInterface $manager)
     {
         if(!$bien) {
             $bien = new Bien();
@@ -242,10 +243,22 @@ class AdminController extends AbstractController
             else {
                 $editMode = 1;
             }
-            $manager->persist($bien);
-           
-            $manager->flush();
+            //$manager->persist($bien);
+            
+            //$manager->flush();
+            
+            $toto="Description : ".$bien->getDescription().'</br>'."Surface : ".$bien->getSurface().'</br>'."Statut : ".$bien->getStatut().'</br>'."Image : ".$bien->getImage().'</br>'."Date : ".$bien->getCreatedAt()->format('Y-m-d H:i:s').'</br>'."Type : ".$bien->getTipe()->getLibelle().'</br>'."Catégorie : ".$bien->getCategorie()->getLibelle();
+
             $this->addFlash('success', 'Bien créé');
+            
+            $message = (new \Swift_Message('Hello Email'))
+                                ->setFrom('nuzzomarcel358@gmail.com')
+                                ->setTo('nuzzo.marcel@aliceadsl.fr')
+                                ->setBody($toto,
+                                      'text/html'
+                                    )
+                                ;
+                                $mailer->send($message);
 
             return $this->redirectToRoute('admin_bien');
         }
