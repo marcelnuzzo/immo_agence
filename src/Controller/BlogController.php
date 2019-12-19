@@ -55,23 +55,19 @@ class BlogController extends AbstractController
      */
     public function show($id, Request $request, EntityManagerInterface $manager)
     {
-        $repo = $this->getDoctrine()->getRepository(Bien::class);
-        
+        $repo = $this->getDoctrine()->getRepository(Bien::class);  
         $bien = $repo->find($id);
-       
+
         $form = $this->createFormBuilder($bien)
                      ->add('description')
                      ->add('image')
                      ->add('surface')
                      ->getForm();
-
                 $form->handleRequest($request);
 
-                if($form->isSubmitted() && $form->isValid()) {
-                   
+                if($form->isSubmitted() && $form->isValid()) {                 
                     $manager->persist($bien);
                     $manager->flush();
-            
                         return $this->redirectToRoute('blog_show',  ['id' => $bien->getId()
                         ]);
                 }
@@ -95,7 +91,6 @@ class BlogController extends AbstractController
         $categories = $repo->findAll();
 
         $currentRoute = $request->attributes->get('_route');
-
         $libelle="";
         if($currentRoute == "appart")
             $libelle = 'appartement';
@@ -147,7 +142,6 @@ class BlogController extends AbstractController
      */
     public function findAllBienInByCategory(Request $request)
     {
-
         $repo = $this->getDoctrine()->getRepository(Bien::class);
         $biens = $repo->findAll();
 
@@ -166,9 +160,6 @@ class BlogController extends AbstractController
         $categories = $this->getDoctrine()
         ->getRepository(Categorie::class)
         ->findAllBienInByCategory($libelle);
-
-        //dd($biens);
-        //dd($categories);
 
         return $this->render('blog/categorieFiltre.html.twig', [
             'controller_name' => 'BlogController',
@@ -202,8 +193,6 @@ class BlogController extends AbstractController
             ->getRepository(Tipe::class)
             ->findByType($libelle);
 
-            //dd($tipes);
-
             return $this->render('blog/venteLoc.html.twig', [
                 'controller_name' => 'BlogController',
                 'tipes'=> $tipes,
@@ -227,13 +216,7 @@ class BlogController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(Bien::class);
         $biens = $repo->findAll();
-        //$repo1 = $this->getDoctrine()->getRepository(Tipe::class);
-        //$tipe = $repo1->findAll();
-        //$repo2 = $this->getDoctrine()->getRepository(Categorie::class);
-        //$categorie = $repo2->findAll();
-        //$repo3 = $this->getDoctrine()->getRepository(Bien::class);
-        //$bien = $repo3->findAll();
-
+       
         $currentRoute = $request->attributes->get('_route');
 
         $libelle = '';
@@ -275,11 +258,6 @@ class BlogController extends AbstractController
             ->getRepository(Tipe::class)
             ->findByTypeCat($libelle, $libelle2);
 
-            //dd($biens);
-            //dd($categories);
-            //dd($tipes);
-            //dd($libelle);
-            //dd($tipe);
             if($tipes == null)
                 $this->addFlash('warning', 'Pas de biens dans cette catégorie!');
             return $this->render('blog/venteLocBien.html.twig', [
@@ -290,5 +268,4 @@ class BlogController extends AbstractController
                 'libelle2' => $libelle2
             ]);
     }
-
 }
