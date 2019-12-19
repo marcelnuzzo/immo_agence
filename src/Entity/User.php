@@ -26,10 +26,7 @@ class User implements UserInterface
      * @Assert\Email()
      */
     private $email;
-    // /**
-    //  * @ORM\Column(type="string", length=255)
-    // */
-    //private $roles;
+    
     // /**
     // * @ORM\Column(type="string", length=255)
     // */
