@@ -71,9 +71,17 @@ class AdminController extends AbstractController
 
     /**
     * @Route("/admin/newCat", name="admin_createCat")
+    * @Route("/admin/editionCat/{id}", name="admin_editCat")
     */
     public function formulaireCat(Request $request, EntityManagerInterface $manager, Categorie $categorie = null)
     {
+        $currentRoute = $request->attributes->get('_route');
+        $route = "admin/createCat";
+        if($currentRoute == "admin/newCat")
+            $route = "admin_createCat";
+        else if($currentRoute == "admin/editionCat/{id}")
+            $route = "admin_editCat";
+
         if(!$categorie) {
             $categorie = new Categorie();
         }
@@ -95,7 +103,8 @@ class AdminController extends AbstractController
                         return $this->redirectToRoute('admin_categorie');
                 }
 
-                return $this->render('admin/createCat.html.twig', [
+                $html = ".html.twig";
+                return $this->render($route.$html, [
                      'formCategorie' => $form->createView(),
                      'editMode' => $categorie->getId() !== null
                      ]);
@@ -103,46 +112,18 @@ class AdminController extends AbstractController
     }
 
     /**
-    * 
-    * @Route("/admin/editionCat/{id}", name="admin_editCat")
-    */
-    public function formulaireCat2(Request $request, EntityManagerInterface $manager, Categorie $categorie = null)
-    {
-        if(!$categorie) {
-            $categorie = new Categorie();
-        }
-    
-        $form = $this->createFormBuilder($categorie)
-                     ->add('libelle')
-                     ->getForm();
-
-                $form->handleRequest($request);
-
-                if($form->isSubmitted() && $form->isValid()) {
-                    if(!$categorie)
-                        $editMode = 0;
-                    else
-                        $editMode = 1;
-                    $manager->persist($categorie);
-                    $manager->flush();
-            
-                        return $this->redirectToRoute('admin_categorie',  ['id' => $categorie->getId()
-                        ]);
-                }
-
-                return $this->render('admin/createCat.html.twig', [
-                     'formCategorie' => $form->createView(),
-                     'editMode' => $categorie->getId() !== null
-                     ]);
-    
-    }
-
-     /**
     * @Route("/admin/newTip", name="admin_createTip")
-    * 
+    * @Route("/admin/editionTip/{id}", name="admin_editTip")
     */
     public function formulaireTip(Bien $bien = null, Request $request, EntityManagerInterface $manager, Tipe $tipe = null)
     {
+        $currentRoute = $request->attributes->get('_route');
+        $route = "admin/createTip";
+        if($currentRoute == "admin/newTip")
+            $route = "admin_createTip";
+        else if($currentRoute == "admin/editionTip/{id}")
+            $route = "admin_editTip";
+
         if(!$tipe) {
             $tipe = new Tipe();
             $bien = new Bien();
@@ -165,38 +146,8 @@ class AdminController extends AbstractController
                         return $this->redirectToRoute('admin_tipe');
                 }
 
-                return $this->render('admin/createTip.html.twig', [
-                     'formTipe' => $form->createView(),
-                     'editMode' => $tipe->getId() !== null
-                     ]);
-    
-    }
-
-    /**
-    * 
-    * @Route("/admin/editionTip/{id}", name="admin_editTip")
-    */
-    public function formulaireTyp1(Bien $bien = null, Request $request, EntityManagerInterface $manager, Tipe $tipe = null)
-    {    
-        $form = $this->createFormBuilder($tipe)
-                     ->add('libelle')
-                     ->getForm();
-
-                $form->handleRequest($request);
-
-                if($form->isSubmitted() && $form->isValid()) {
-                    if(!$tipe)
-                        $editMode = 0;
-                    else
-                        $editMode = 1;
-                    $manager->persist($tipe);
-                    $manager->flush();
-            
-                        return $this->redirectToRoute('admin_type',  ['id' => $tipe->getId()
-                        ]);
-                }
-
-                return $this->render('admin/createTip.html.twig', [
+                $html = ".html.twig";
+                return $this->render($route.$html, [
                      'formTipe' => $form->createView(),
                      'editMode' => $tipe->getId() !== null
                      ]);
@@ -205,10 +156,17 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin/newBie", name="admin_createBie")
-     * 
+     * @Route("/admin/editionBie/{id}", name="admin_editBie")
      */
     public function formBie( \Swift_Mailer $mailer, Bien $bien = null, Categorie $categorie = null, Request $request, EntityManagerInterface $manager)
     {
+        $currentRoute = $request->attributes->get('_route');
+        $route = "admin/createBie";
+        if($currentRoute == "admin/newBie")
+            $route = "admin_createBie";
+        else if($currentRoute == "admin/editionBie/{id}")
+            $route = "admin_editBie";
+
         if(!$bien) {
             $bien = new Bien();
             $categorie = new Categorie();
@@ -230,11 +188,9 @@ class AdminController extends AbstractController
                         "choice_label" => 'libelle'
                     ])
                      ->getForm();
-
-        
+   
             $form->handleRequest($request);
-       
-        
+           
         if($form->isSubmitted() && $form->isValid()) {
             if(!$bien->getId()) {
                 $bien->setCreatedAt(new \DateTime());
@@ -243,77 +199,25 @@ class AdminController extends AbstractController
             else {
                 $editMode = 1;
             }
-            //$manager->persist($bien);
-            
-            //$manager->flush();
-            
-            $toto="Description : ".$bien->getDescription().'</br>'."Surface : ".$bien->getSurface().'</br>'."Statut : ".$bien->getStatut().'</br>'."Image : ".$bien->getImage().'</br>'."Date : ".$bien->getCreatedAt()->format('Y-m-d H:i:s').'</br>'."Type : ".$bien->getTipe()->getLibelle().'</br>'."Catégorie : ".$bien->getCategorie()->getLibelle();
-
+            $manager->persist($bien);         
+            $manager->flush();
             $this->addFlash('success', 'Bien créé');
             
+            $body="Description : ".$bien->getDescription().'</br>'."Surface : ".$bien->getSurface().'</br>'."Etage : ".$bien->getEtage().'</br>'."Chambre : ".$bien->getChambre().'</br>'."Statut : ".$bien->getStatut().'</br>'."Image : ".$bien->getImage().'</br>'."Date : ".$bien->getCreatedAt()->format('Y-m-d H:i:s').'</br>'."Type : ".$bien->getTipe()->getLibelle().'</br>'."Catégorie : ".$bien->getCategorie()->getLibelle();
+
             $message = (new \Swift_Message('Hello Email'))
-                                ->setFrom('nuzzomarcel358@gmail.com')
-                                ->setTo('nuzzo.marcel@aliceadsl.fr')
-                                ->setBody($toto,
-                                      'text/html'
-                                    )
-                                ;
-                                $mailer->send($message);
+                        ->setFrom('nuzzomarcel358@gmail.com')
+                        ->setTo('nuzzo.marcel@aliceadsl.fr')
+                        ->setBody($body,
+                                'text/html'
+                            );
+            $mailer->send($message);
 
             return $this->redirectToRoute('admin_bien');
         }
 
-    return $this->render("admin/createBie.html.twig", [
-            'formBien' => $form->createView(),
-            'editMode' => $bien->getId() !== null
-        ]);
-    }
-
-     /**
-     * 
-     * @Route("/admin/editionBie/{id}", name="admin_editBie")
-     */
-    public function formBie1 (Bien $bien = null, Categorie $categorie = null, Request $request, EntityManagerInterface $manager)
-    {
-       
-        $form = $this->createFormBuilder($bien)
-                     ->add('description')
-                     ->add('surface')
-                     ->add('etage')
-                     ->add('chambre')
-                     ->add('image')
-                     ->add('statut')
-                     ->add('tipe', EntityType::class, [
-                     'class' => Tipe::class,
-                     "choice_label" => 'libelle'
-                     ])
-                     ->add('categorie', EntityType::class, [
-                     'class' => Categorie::class,
-                     "choice_label" => 'libelle'
-                     ])
-                     ->getForm();
-
-        
-            $form->handleRequest($request);
-       
-        
-        if($form->isSubmitted() && $form->isValid()) {
-            if(!$bien->getId()) {
-                $bien->setCreatedAt(new \DateTime());
-                $editMode = 0;
-            }
-            else {
-                $editMode = 1;
-            }
-            $manager->persist($bien);
-           
-            $manager->flush();
-
-            return $this->redirectToRoute('admin_bien', ['id' => $bien->getId()
-            ]);
-        }
-
-    return $this->render("admin/createBie.html.twig", [
+        $html = ".html.twig";
+        return $this->render($route.$html, [
             'formBien' => $form->createView(),
             'editMode' => $bien->getId() !== null
         ]);
